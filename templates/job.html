@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f7fb">
+    <title>{{ job['title'] }} at {{ job['company'] }} | JobConnect</title>
+    <style>
+        :root {
+            --ink: #17213a;
+            --muted: #737d92;
+            --brand: #5946e8;
+            --line: #e9eaf1;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: #f7f8fc;
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+        a { color: inherit; text-decoration: none; }
+        .shell { width: min(940px, calc(100% - 40px)); margin: 0 auto; }
+        .topbar { background: white; border-bottom: 1px solid var(--line); }
+        .nav { min-height: 72px; display: flex; align-items: center; justify-content: space-between; }
+        .brand { display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; font-weight: 850; letter-spacing: -.05em; }
+        .brand-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 11px; background: var(--brand); color: white; }
+        .back-link { color: #606b81; font-size: .92rem; font-weight: 700; }
+        .back-link:hover { color: var(--brand); }
+        main { padding: 46px 0 64px; }
+        .job-card { padding: clamp(24px, 5vw, 44px); border: 1px solid var(--line); border-radius: 18px; background: white; box-shadow: 0 12px 35px #1f2b4d0d; }
+        .company-mark { display: grid; width: 54px; height: 54px; place-items: center; border: 1px solid #e9e5ff; border-radius: 15px; background: #f1efff; color: var(--brand); font-size: 1.3rem; font-weight: 850; }
+        .eyebrow { margin: 23px 0 9px; color: var(--brand); font-size: .75rem; font-weight: 850; letter-spacing: .13em; text-transform: uppercase; }
+        h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.25rem); letter-spacing: -.06em; line-height: 1.1; }
+        .company { margin: 10px 0 0; color: var(--muted); font-size: 1.08rem; font-weight: 650; }
+        .job-meta { display: flex; flex-wrap: wrap; gap: 9px; margin: 22px 0 30px; }
+        .tag { padding: 8px 11px; border: 1px solid #eff0f5; border-radius: 8px; background: #f8f9fc; color: #59647a; font-size: .88rem; }
+        h2 { margin: 0 0 12px; font-size: 1.15rem; letter-spacing: -.025em; }
+        .description { color: #5f6b82; font-size: .98rem; line-height: 1.8; white-space: pre-line; }
+        .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+        .button { display: inline-flex; min-height: 46px; align-items: center; justify-content: center; padding: 0 17px; border-radius: 10px; background: var(--brand); color: white; font-size: .92rem; font-weight: 750; }
+        .button:hover { background: #4534c8; }
+        .button-secondary { border: 1px solid var(--line); background: white; color: var(--ink); }
+        .button-secondary:hover { background: #f7f8fc; }
+        @media (max-width: 480px) { .shell { width: calc(100% - 28px); } .nav { min-height: 66px; } main { padding-top: 28px; } }
+    </style>
+</head>
+<body>
+    <header class="topbar">
+        <nav class="nav shell" aria-label="Main navigation">
+            <a class="brand" href="{{ url_for('home') }}">
+                <span class="brand-mark" aria-hidden="true">J</span>
+                <span>JobConnect</span>
+            </a>
+            <a class="back-link" href="{{ url_for('home') }}">← All jobs</a>
+        </nav>
+    </header>
+    <main class="shell">
+        <article class="job-card">
+            <span class="company-mark" aria-hidden="true">{{ job['company'][0]|upper }}</span>
+            <p class="eyebrow">Opportunity on JobConnect</p>
+            <h1>{{ job['title'] }}</h1>
+            <p class="company">{{ job['company'] }}</p>
+            <div class="job-meta">
+                <span class="tag">⌖ {{ job['location'] }}</span>
+                <span class="tag">{{ job['salary'] }}</span>
+                <span class="tag">Full-time</span>
+            </div>
+            <h2>About the role</h2>
+            <div class="description">{{ job['description'] }}</div>
+            <div class="actions">
+                <a class="button" href="{{ url_for('add_job') }}">Post a job</a>
+                <a class="button button-secondary" href="{{ url_for('home') }}">Browse all roles</a>
+            </div>
+        </article>
+    </main>
+</body>
+</html>
